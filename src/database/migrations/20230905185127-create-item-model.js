@@ -8,15 +8,18 @@ module.exports = {
         primaryKey: true,
         autoIncrement: true,
       },
-      nome_item: Sequelize.STRING,
-      criadoem: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW'),
+      nome_item:  {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      editadoem: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW'),
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      }
     });
   },
 
