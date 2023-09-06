@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize('projeto', 'postgres', 'gWKbaPzMMalfTpvg7KxG', {
   host: 'containers-us-west-66.railway.app',
-  port: 6070,
+  port: 6970,
   dialect: 'postgres', // Use 'postgres' como o dialeto para PostgreSQL
 });
 

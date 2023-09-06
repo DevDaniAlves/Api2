@@ -1,8 +1,8 @@
 const {Router} = require('express')
-const {createSala} =  require('./database/controller/salaController')
+const salaController =  require('./database/controller/salaController')
 
 const routes = Router();
 
-routes.post('/sala', createSala)
+routes.post('/sala', salaController.createSala)
 
 module.exports = {routes}

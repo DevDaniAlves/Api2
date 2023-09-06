@@ -10,14 +10,7 @@ module.exports = (sequelize) => {
     professor: DataTypes.STRING,
     turno: DataTypes.INTEGER,
     nome_turma: DataTypes.STRING,
-    criadoem: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    editadoem: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
+    
   });
 
   Turma.associate = (models) => {

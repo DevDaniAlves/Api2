@@ -12,14 +12,7 @@ module.exports = {
       id_item: Sequelize.INTEGER,
       resolvido: Sequelize.BOOLEAN,
       quantidade: Sequelize.INTEGER,
-      criadoem: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW'),
-      },
-      editadoem: {
-        type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('NOW'),
-      },
+      
     });
 
     // Referencie o modelo 'Manutencao'

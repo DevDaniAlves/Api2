@@ -9,14 +9,7 @@ module.exports = (sequelize) => {
     },
     id_turma: DataTypes.INTEGER,
     turno: DataTypes.INTEGER,
-    criadoem: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    editadoem: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
+  
   }, {
     timestamps: false,
   });

@@ -14,14 +14,6 @@ module.exports = (sequelize) => {
     mat_disp: DataTypes.BOOLEAN,
     not_disp: DataTypes.BOOLEAN,
     tamanho: DataTypes.FLOAT,
-    criadoem: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    editadoem: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
   });
 
   return Sala;

@@ -8,14 +8,6 @@ module.exports = (sequelize) => {
       autoIncrement: true,
     },
     nome_item: DataTypes.STRING,
-    criadoem: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    editadoem: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
   });
 
   return Item;

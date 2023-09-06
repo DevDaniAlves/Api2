@@ -9,14 +9,6 @@ module.exports = (sequelize) => {
     },
     id_sala: DataTypes.INTEGER,
     quantidade: DataTypes.INTEGER,
-    criadoem: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
-    editadoem: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-    },
   }, {
     timestamps: false,
   });
