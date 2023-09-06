@@ -30,6 +30,24 @@ class TurmaController {
     }
   }
 
+  async getAll(req, res) {
+    try {
+      
+
+      // Verificar se a turma existe
+      const turma = await Turma.findAll();
+
+      if (!turma) {
+        return res.status(404).json({ error: 'Nenhuma Turma Cadastrada' });
+      }
+
+      return res.status(200).json(turma);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Ocorreu um erro ao obter informações da turma.' });
+    }
+  }
+
   // Read (obtenção de informações de uma turma por ID)
   async getTurmaById(req, res) {
     try {

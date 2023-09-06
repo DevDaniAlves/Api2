@@ -47,6 +47,22 @@ class salaController {
   }
 
   // Read (obtenção de informações de uma sala por ID)
+  async getAll (req, res) {
+    try {
+     
+      // Verificar se a sala existe
+      const sala = await Sala.findAll();
+
+      if (!sala) {
+        return res.status(404).json({ error: 'Nenhuma Sala Cadastrada.' });
+      }
+
+      return res.status(200).json(sala);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Ocorreu um erro ao obter informações da sala.' });
+    }
+  }
    async getSalaById (req, res) {
     try {
       const salaId = req.params.id;
@@ -88,7 +104,7 @@ class salaController {
     }
   }
   // Delete (exclusão de uma sala por ID)
-   async deleteSal (req, res){
+   async deleteSala (req, res){
     try {
       const salaId = req.params.id;
 

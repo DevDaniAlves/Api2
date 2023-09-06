@@ -29,6 +29,22 @@ class ItemController {
     }
   }
 
+  async getAll(req, res) {
+    try {
+
+      // Verificar se o item existe
+      const item = await Item.findAll();
+
+      if (!item) {
+        return res.status(404).json({ error: 'Nenhum item cadastrado.' });
+      }
+
+      return res.status(200).json(item);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Ocorreu um erro ao obter informações do item.' });
+    }
+  }
   // Read (obtenção de informações de um item por ID)
   async getItemById(req, res) {
     try {
