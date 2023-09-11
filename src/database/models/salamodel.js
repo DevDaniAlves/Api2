@@ -2,7 +2,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../sequelize');
 
 module.exports = (sequelize) => {
-  const Sala = sequelize.define('salas', {
+  const Sala = sequelize.define('Sala', {
     // Definição dos campos do modelo Sala
     id: {
       type: DataTypes.INTEGER,
@@ -17,15 +17,15 @@ module.exports = (sequelize) => {
     not_disp: DataTypes.BOOLEAN,
     vesp_disp: DataTypes.BOOLEAN,
     tamanho: DataTypes.FLOAT,
-  });
+  },
+  {tableName: "salas"});
 
   // Associação com Patrimonio_Sala
   Sala.associate = (models) => {
-    // Associação com Patrimonio_Sala
     Sala.belongsToMany(models.Item, {
-      through: "patrimonio_sala", // Use the PatrimonioSala model directly // Renamed to 'Itens' to avoid naming conflict
+      through: "patrimonio_salas",
       foreignKey: 'id_sala',
-      otherKey: 'id'
+      otherKey: 'id_item'
     });
   };
 

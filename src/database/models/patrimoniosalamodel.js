@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  const Patrimonio_Sala = sequelize.define('patrimonio_sala', {
+  const PatrimonioSala = sequelize.define('PatrimonioSala', {
     // Definição dos campos do modelo Patrimonio_Sala
     id_item: {
       type: DataTypes.INTEGER,
@@ -15,11 +15,11 @@ module.exports = (sequelize) => {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-  });
+  },{tableName: 'patrimonio_salas'},);
 
   // In Patrimonio_Sala model
-Patrimonio_Sala.associate =(models) => {
-  Patrimonio_Sala.belongsTo(models.Sala, {
+PatrimonioSala.associate =(models) => {
+  PatrimonioSala.belongsTo(models.Sala, {
     foreignKey: 'id_sala',
     targertKey: 'id'
   })
@@ -29,5 +29,5 @@ Patrimonio_Sala.associate =(models) => {
   })
 }
   
-  return Patrimonio_Sala;
+  return PatrimonioSala;
 };

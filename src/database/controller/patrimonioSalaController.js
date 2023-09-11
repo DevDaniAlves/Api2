@@ -8,10 +8,23 @@ class PatrimonioSalaController {
   // Consulta com Inner Join entre PatrimonioSala, Sala e Item
   async getPatrimonioSalaWithSalaAndItem(req, res) {
     try {
-      const patrimonioSala = await sequelize.query('SELECT (s.id, ps.id, i.nome_item) FROM patrimonio_sala ps INNER JOIN item i on (i.id = ps.id_item) INNER JOIN sala s on (s.id = ps.id_sala)')
-      
+      const patrimonioSalaData = await PatrimonioSala.findAll();
 
-      return res.status(200).json(patrimonioSala);
+      // Use um loop ou mapeamento para buscar dados associados
+      const patrimonioSalaWithAssociations = await Promise.all(
+        patrimonioSalaData.map(async (patrimonioSala) => {
+          const item = await Item.findByPk(patrimonioSala.id_item);
+          const sala = await Sala.findByPk(patrimonioSala.id_sala);
+  
+          // Combine os dados associados com o objeto PatrimonioSala
+          return {
+            patrimonioSala: patrimonioSala,
+            item: item,
+            sala: sala,
+          };
+        })
+      );
+      return res.status(200).json(patrimonioSalaWithAssociations);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: 'Ocorreu um erro ao obter informações do patrimônio de sala.' });

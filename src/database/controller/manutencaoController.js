@@ -8,9 +8,24 @@ class ManutencaoController {
   // Consulta com Inner Join entre Manutencao, Sala e Item
   async getManutencaoWithSalaAndItem(req, res) {
     try {
-      const manutencao = await sequelize.query('SELECT (s.id, m.id, i.nome_item, m.resolvido) FROM manutencao m INNER JOIN item i on (i.id = m.id_item) INNER JOIN sala s on (s.id = m.id_sala)')
+      const salaRecebeTurmaData = await SalaRecebeTurma.findAll();
 
-      return res.status(200).json(manutencao);
+    // Use um loop ou mapeamento para buscar dados associados
+    const salaRecebeTurmaWithAssociations = await Promise.all(
+      salaRecebeTurmaData.map(async (salaRecebeTurma) => {
+        const sala = await salaRecebeTurma.getSala();
+        const turma = await salaRecebeTurma.getTurma();
+
+        // Combine os dados associados com o objeto SalaRecebeTurma
+        return {
+          salaRecebeTurma: salaRecebeTurma,
+          sala: sala,
+          turma: turma,
+        };
+      })
+    );
+
+    return res.status(200).json(salaRecebeTurmaWithAssociations);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: 'Ocorreu um erro ao obter informações da manutenção.' });

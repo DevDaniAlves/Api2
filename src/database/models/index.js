@@ -1,11 +1,5 @@
 const sequelize = require('../sequelize'); // Importe a instância do sequelize
-const uninitModels = require('./models');
-let initModels = uninitModels(sequelize);
-initModels = { connection: sequelize, ...initModels }
 
-const {
-    Item, Sala, Patrimonio_Sala
-} = initModels;
 
 (async () => {
     try {

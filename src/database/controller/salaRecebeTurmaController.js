@@ -2,13 +2,29 @@ const { Sequelize } = require('sequelize');
 const sequelize = require('../sequelize')
 const SalaRecebeTurma = require('../models/salarecebeturmamodel')(sequelize);
 const Turma = require('../models/turmamodel')(sequelize);
+const Sala = require('../models/salamodel')(sequelize)
 
 class SalaRecebeTurmaController {
   // Consulta com Inner Join entre SalaRecebeTurma e Turma
   async getSalaRecebeTurmaWithTurma(req, res) {
     try {
-      const salaRecebeTurma = await sequelize.query('SELECT (s.id, st.id, t.turma, st.turno) FROM sala_recebe_turma st INNER JOIN turma t on (t.id = m.id_item) INNER JOIN sala s on (s.id = m.id_sala)')
-      return res.status(200).json(salaRecebeTurma);
+      await SalaRecebeTurma.findAll();
+
+    // Use um loop ou mapeamento para buscar dados associados
+    const salaRecebeTurmaWithAssociations = await Promise.all(
+      salaRecebeTurmaData.map(async (salaRecebeTurma) => {
+        const sala = await salaRecebeTurma.getSala();
+        const turma = await salaRecebeTurma.getTurma();
+
+        // Combine os dados associados com o objeto SalaRecebeTurma
+        return {
+          salaRecebeTurma: salaRecebeTurma,
+          sala: sala,
+          turma: turma,
+        };
+      })
+    );
+      return res.status(200).json(salaRecebeTurmaWithAssociations);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: 'Ocorreu um erro ao obter informações da relação entre sala e turma.' });
