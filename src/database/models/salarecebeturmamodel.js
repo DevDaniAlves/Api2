@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
     turno: DataTypes.INTEGER,
   
   }, {
-    timestamps: false,
+    timestamps: true,
   });
 
   SalaRecebeTurma.associate = (models) => {

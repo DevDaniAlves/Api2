@@ -1,24 +1,14 @@
 const { Sequelize } = require('sequelize');
-const Manutencao = require('../models/manutencao')(sequelize);
+const sequelize = require('../sequelize')
+const Manutencao = require('../models/manutençãomodel')(sequelize);
 const Sala = require('../models/salamodel')(sequelize);
-const Item = require('../models/item')(sequelize);
+const Item = require('../models/itemmodel')(sequelize);
 
 class ManutencaoController {
   // Consulta com Inner Join entre Manutencao, Sala e Item
   async getManutencaoWithSalaAndItem(req, res) {
     try {
-      const manutencao = await Manutencao.findAll({
-        include: [
-          {
-            model: Sala,
-            required: true, // Isso faz com que seja um inner join
-          },
-          {
-            model: Item,
-            required: true, // Isso faz com que seja um inner join
-          },
-        ],
-      });
+      const manutencao = await sequelize.query('SELECT (s.id, m.id, i.nome_item, m.resolvido) FROM manutencao m INNER JOIN item i on (i.id = m.id_item) INNER JOIN sala s on (s.id = m.id_sala)')
 
       return res.status(200).json(manutencao);
     } catch (error) {

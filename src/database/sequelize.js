@@ -1,10 +1,14 @@
 const { Sequelize } = require('sequelize');
 
+
+
 const sequelize = new Sequelize('projeto', 'postgres', 'gWKbaPzMMalfTpvg7KxG', {
   host: 'containers-us-west-66.railway.app',
   port: 6970,
   dialect: 'postgres', // Use 'postgres' como o dialeto para PostgreSQL
 });
+const Item = require('./models/itemmodel')
+const Sala = require('./models/salamodel')
 
 // Teste a conexão com o banco de dados
 sequelize
@@ -15,5 +19,5 @@ sequelize
   .catch((err) => {
     console.error('Erro ao conectar com o banco de dados PostgreSQL:', err);
   });
-
+  
 module.exports = sequelize;

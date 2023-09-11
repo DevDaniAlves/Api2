@@ -5,43 +5,48 @@ const turmaController = require('./database/controller/turmaController');
 const patrimonioSalaController = require('./database/controller/patrimonioSalaController');
 const salaRecebeTurmaController = require('./database/controller/salaRecebeTurmaController');
 const manutencaoControleer = require('./database/controller/manutencaoController')
+const {authMiddleware} = require('./database/middlewares/authMiddleware')
+const siginUserController = require ('./database/controller/sigin-user-controller')
+const signupUserController = require ('./database/controller/signup-user-controller')
 const routes = Router();
 
-routes.post('/sala/create', salaController.createSala)
-routes.get('/sala/getAll', salaController.getAll)
-routes.get('/sala/getbyId/:id', salaController.getSalaById)
-routes.put('/sala/update', salaController.updateSala)
-routes.delete('/sala/delete/:id', salaController.deleteSala)
+routes.post('/sala/create', authMiddleware,  salaController.createSala)
+routes.get('/sala/getAll', authMiddleware, salaController.getAll)
+routes.get('/sala/getbyId/:id', authMiddleware, salaController.getSalaById)
+routes.put('/sala/update', authMiddleware, salaController.updateSala)
+routes.delete('/sala/delete/:id', authMiddleware, salaController.deleteSala)
 
-routes.post('/item/create', itemController.createItem)
-routes.get('/item/getAll', itemController.getAll)
-routes.get('/item/getbyId/:id', itemController.getItemById)
-routes.put('/item/update', itemController.updateItem)
-routes.delete('/item/delete/:id', itemController.deleteItem)
+routes.post('/item/create', authMiddleware, itemController.createItem)
+routes.get('/item/getAll', authMiddleware, itemController.getAll)
+routes.get('/item/getbyId/:id', authMiddleware, itemController.getItemById)
+routes.put('/item/update', authMiddleware, itemController.updateItem)
+routes.delete('/item/delete/:id', authMiddleware, itemController.deleteItem)
 
-routes.post('/turma/create', turmaController.createTurma)
-routes.get('/turma/getAll', turmaController.getAll)
-routes.get('/turma/getbyId/:id', turmaController.getTurmaById)
-routes.put('/turma/update', turmaController.updateTurma)
-routes.delete('/turma/delete/:id', turmaController.deleteTurma)
+routes.post('/turma/create', authMiddleware, turmaController.createTurma)
+routes.get('/turma/getAll', authMiddleware, turmaController.getAllTurmas)
+routes.get('/turma/getbyId/:id', authMiddleware, turmaController.getTurmaById)
+routes.put('/turma/update', authMiddleware, turmaController.updateTurma)
+routes.delete('/turma/delete/:id', authMiddleware, turmaController.deleteTurma)
 
-routes.post('/patrimonio_sala/create', patrimonioSalaController.createPatrimonioSala)
-routes.get('/patrimonio_sala/getAll', patrimonioSalaController.getPatrimonioSalaWithSalaAndItem)
-routes.get('/patrimonio_sala/getbyId/:id', patrimonioSalaController.getPatrimonioSalaById)
-routes.put('/patrimonio_sala/update', patrimonioSalaController.updatePatrimonioSala)
-routes.delete('/patrimonio_sala/delete/:id', patrimonioSalaController.deletePatrimonioSala)
+routes.post('/patrimonio_sala/create', authMiddleware, patrimonioSalaController.createPatrimonioSala)
+routes.get('/patrimonio_sala/getAll', authMiddleware, patrimonioSalaController.getPatrimonioSalaWithSalaAndItem)
+routes.get('/patrimonio_sala/getbyId/:id', authMiddleware, patrimonioSalaController.getPatrimonioSalaById)
+routes.put('/patrimonio_sala/update', authMiddleware, patrimonioSalaController.updatePatrimonioSala)
+routes.delete('/patrimonio_sala/delete/:id', authMiddleware, patrimonioSalaController.deletePatrimonioSala)
 
-routes.post('/sala_recebe_turma/create', salaRecebeTurmaController.createSalaRecebeTurma)
-routes.get('/sala_recebe_turma/getAll', salaRecebeTurmaController.getSalaRecebeTurmaWithTurma)
-routes.get('/sala_recebe_turma/getbyId/:id', salaRecebeTurmaController.getSalaRecebeTurmaById)
-routes.put('/sala_recebe_turma/update', salaRecebeTurmaController.updateSalaRecebeTurma)
-routes.delete('/sala_recebe_turma/delete/:id', salaRecebeTurmaController.deleteSalaRecebeTurma)
+routes.post('/sala_recebe_turma/create', authMiddleware, salaRecebeTurmaController.createSalaRecebeTurma)
+routes.get('/sala_recebe_turma/getAll', authMiddleware, salaRecebeTurmaController.getSalaRecebeTurmaWithTurma)
+routes.get('/sala_recebe_turma/getbyId/:id', authMiddleware, salaRecebeTurmaController.getSalaRecebeTurmaById)
+routes.put('/sala_recebe_turma/update', authMiddleware, salaRecebeTurmaController.updateSalaRecebeTurma)
+routes.delete('/sala_recebe_turma/delete/:id', authMiddleware, salaRecebeTurmaController.deleteSalaRecebeTurma)
 
-routes.post('/manutencao/create', manutencaoControleer.createManutencao)
-routes.get('/manutencao/getAll', manutencaoControleer.getManutencaoWithSalaAndItem)
-routes.get('/manutencao/getbyId/:id', manutencaoControleer.getManutencaoById)
-routes.put('/manutencao/update', manutencaoControleer.updateManutencao)
-routes.delete('/manutencao/delete/:id', manutencaoControleer.deleteManutencao)
+routes.post('/manutencao/create', authMiddleware, manutencaoControleer.createManutencao)
+routes.get('/manutencao/getAll', authMiddleware, manutencaoControleer.getManutencaoWithSalaAndItem)
+routes.get('/manutencao/getbyId/:id', authMiddleware,manutencaoControleer.getManutencaoById)
+routes.put('/manutencao/update', authMiddleware, manutencaoControleer.updateManutencao)
+routes.delete('/manutencao/delete/:id', authMiddleware,manutencaoControleer.deleteManutencao)
 
+routes.post('/user/signup', signupUserController.signup);
+routes.post('/user/sigin', siginUserController.sigin);
 
 module.exports = {routes}

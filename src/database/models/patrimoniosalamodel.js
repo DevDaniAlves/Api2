@@ -2,30 +2,32 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   const Patrimonio_Sala = sequelize.define('patrimonio_sala', {
+    // Definição dos campos do modelo Patrimonio_Sala
     id_item: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
+      allowNull: false
     },
-    id_sala: DataTypes.INTEGER,
-    quantidade: DataTypes.INTEGER,
-  }, {
-    timestamps: false,
+    id_sala: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    quantidade: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   });
 
-  Patrimonio_Sala.associate = (models) => {
-    Patrimonio_Sala.belongsTo(models.sala, {
-      foreignKey: 'id_sala',
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
-
-    Patrimonio_Sala.belongsTo(models.item, {
-      foreignKey: 'id_item',
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE',
-    });
-  };
-
+  // In Patrimonio_Sala model
+Patrimonio_Sala.associate =(models) => {
+  Patrimonio_Sala.belongsTo(models.Sala, {
+    foreignKey: 'id_sala',
+    targertKey: 'id'
+  })
+  Patrimonio_Sala.belongsTo(models.Item, {
+    foreignKey: 'id_item',
+    targertKey: 'id'
+  })
+}
+  
   return Patrimonio_Sala;
 };

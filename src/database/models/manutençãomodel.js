@@ -1,31 +1,45 @@
-'use strict';
+const { DataTypes } = require('sequelize');
 
-module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('manutencao', {
-      id: {
-        type: Sequelize.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      id_sala: Sequelize.INTEGER,
-      id_item: Sequelize.INTEGER,
-      resolvido: Sequelize.BOOLEAN,
-      quantidade: Sequelize.INTEGER,
+module.exports = (sequelize) => {
+  const Manutencao = sequelize.define('manutencao', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    id_sala: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    id_item: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    resolvido: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false, // Pode ajustar o valor padrão conforme necessário
+    },
+    quantidade: {
+      type: DataTypes.INTEGER,
       
+    },
+  });
+  Manutencao.associate = (models) => {
+
+    Manutencao.belongsTo(sequelize.models.Item, {
+      foreignKey: 'id_item',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
-
-    // Referencie o modelo 'Manutencao'
-    const Manutencao = require('../models')(Sequelize).manutencao; // Certifique-se de que 'manutencao' está definido em seu arquivo 'models.js'
-
-    // Defina a associação para o modelo 'Manutencao'
-    Manutencao.associate({
-      sala: require('../models')(Sequelize).sala, // Certifique-se de que 'sala' está definido em seu arquivo 'models.js'
-      item: require('../models')(Sequelize).item, // Certifique-se de que 'item' está definido em seu arquivo 'models.js'
+  
+    // Associação com Sala
+    Manutencao.belongsTo(sequelize.models.Sala, {
+      foreignKey: 'id_sala',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE',
     });
-  },
+  }
+ 
 
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('manutencao');
-  },
+  return Manutencao;
 };

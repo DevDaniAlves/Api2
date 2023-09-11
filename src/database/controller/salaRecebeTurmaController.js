@@ -1,20 +1,13 @@
 const { Sequelize } = require('sequelize');
-const SalaRecebeTurma = require('../models/sala_recebe_turma')(sequelize);
-const Turma = require('../models/turma')(sequelize);
+const sequelize = require('../sequelize')
+const SalaRecebeTurma = require('../models/salarecebeturmamodel')(sequelize);
+const Turma = require('../models/turmamodel')(sequelize);
 
 class SalaRecebeTurmaController {
   // Consulta com Inner Join entre SalaRecebeTurma e Turma
   async getSalaRecebeTurmaWithTurma(req, res) {
     try {
-      const salaRecebeTurma = await SalaRecebeTurma.findAll({
-        include: [
-          {
-            model: Turma,
-            required: true, // Isso faz com que seja um inner join
-          },
-        ],
-      });
-
+      const salaRecebeTurma = await sequelize.query('SELECT (s.id, st.id, t.turma, st.turno) FROM sala_recebe_turma st INNER JOIN turma t on (t.id = m.id_item) INNER JOIN sala s on (s.id = m.id_sala)')
       return res.status(200).json(salaRecebeTurma);
     } catch (error) {
       console.error(error);

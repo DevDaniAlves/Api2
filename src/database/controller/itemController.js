@@ -1,5 +1,6 @@
 const { Sequelize } = require('sequelize');
-const Item = require('../models/item')(sequelize);
+const sequelize = require('../sequelize')
+const Item = require('../models/itemmodel')(sequelize);
 
 class ItemController {
   // Create (criação de um item)

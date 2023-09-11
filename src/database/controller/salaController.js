@@ -15,7 +15,14 @@ class salaController {
         not_disp,
         tamanho,
       } = req.body;
-
+      console.log(id,
+        capacidade,
+        localizacao,
+        responsavel,
+        vesp_disp,
+        mat_disp,
+        not_disp,
+        tamanho, )
       // Validar os dados antes de criar a sala
       if (!id || !capacidade || !localizacao || !responsavel || !tamanho) {
         return res.status(400).json({ error: 'Campos obrigatórios não fornecidos.' });
