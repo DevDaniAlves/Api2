@@ -2,12 +2,21 @@ const { DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
   const SalaRecebeTurma = sequelize.define('sala_recebe_turma', {
-    id_sala: {
+    id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    id_turma: DataTypes.INTEGER,
+    id_sala: {
+      type: DataTypes.INTEGER,
+      
+      primaryKey: true,
+    },
+    id_turma: {
+      type: DataTypes.INTEGER,
+      
+      primaryKey: true,
+    },
     turno: DataTypes.INTEGER,
   
   }, {

@@ -10,6 +10,7 @@ class turmaController {
       const newTurma = await Turma.create({ professor, turno, nome_turma });
       return res.status(201).json(newTurma);
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ error: 'Não foi possível criar a turma.' });
     }
   }
@@ -62,7 +63,7 @@ class turmaController {
         return res.status(404).json({ error: 'Turma não encontrada.' });
       }
       await turma.destroy();
-      return res.status(204).send();
+      return res.status(200).json({ message: 'Turma excluída com sucesso.' });
     } catch (error) {
       return res.status(500).json({ error: 'Não foi possível excluir a turma.' });
     }

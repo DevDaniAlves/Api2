@@ -8,24 +8,24 @@ class ManutencaoController {
   // Consulta com Inner Join entre Manutencao, Sala e Item
   async getManutencaoWithSalaAndItem(req, res) {
     try {
-      const salaRecebeTurmaData = await SalaRecebeTurma.findAll();
+      const ManutencaoData = await Manutencao.findAll();
 
     // Use um loop ou mapeamento para buscar dados associados
-    const salaRecebeTurmaWithAssociations = await Promise.all(
-      salaRecebeTurmaData.map(async (salaRecebeTurma) => {
-        const sala = await salaRecebeTurma.getSala();
-        const turma = await salaRecebeTurma.getTurma();
+    const ManutencaoWithAssociations = await Promise.all(
+      ManutencaoData.map(async (Manutencao) => {
+        const sala = await Sala.findByPk(Manutencao.id_sala);
+        const item = await Item.findByPk(Manutencao.id_item);
 
-        // Combine os dados associados com o objeto SalaRecebeTurma
+        // Combine os dados associados com o objeto Manutencao
         return {
-          salaRecebeTurma: salaRecebeTurma,
+          Manutencao: Manutencao,
           sala: sala,
-          turma: turma,
+          turma: item,
         };
       })
     );
 
-    return res.status(200).json(salaRecebeTurmaWithAssociations);
+    return res.status(200).json(ManutencaoWithAssociations);
     } catch (error) {
       console.error(error);
       return res.status(500).json({ error: 'Ocorreu um erro ao obter informações da manutenção.' });
@@ -35,7 +35,7 @@ class ManutencaoController {
   // Create (criação de uma manutenção)
   async createManutencao(req, res) {
     try {
-      const { id_sala, id_item, resolvido, quantidade } = req.body;
+      const { id_item, id_sala, resolvido, quantidade } = req.body;
 
       // Validar os dados antes de criar a manutenção
       if (!id_sala || !id_item || typeof resolvido !== 'boolean' || !quantidade) {
@@ -44,7 +44,7 @@ class ManutencaoController {
 
       // Verificar se a manutenção com os mesmos IDs já existe
       const manutencaoExistente = await Manutencao.findOne({
-        where: { id_sala, id_item },
+        where: { id },
       });
 
       if (manutencaoExistente) {
@@ -52,7 +52,7 @@ class ManutencaoController {
       }
 
       // Criar a manutenção
-      const novaManutencao = await Manutencao.create({ id_sala, id_item, resolvido, quantidade });
+      const novaManutencao = await Manutencao.create({ id_item, id_sala, resolvido, quantidade });
 
       return res.status(201).json(novaManutencao);
     } catch (error) {
@@ -64,11 +64,11 @@ class ManutencaoController {
   // Read (obtenção de informações de uma manutenção por ID)
   async getManutencaoById(req, res) {
     try {
-      const { id_sala, id_item } = req.params;
+      const { id } = req.params;
 
       // Verificar se a manutenção existe
       const manutencao = await Manutencao.findOne({
-        where: { id_sala, id_item },
+        where: { id },
       });
 
       if (!manutencao) {
@@ -85,12 +85,12 @@ class ManutencaoController {
   // Update (atualização de informações de uma manutenção por ID)
   async updateManutencao(req, res) {
     try {
-      const { id_sala, id_item } = req.params;
+      const { id } = req.params;
       const { resolvido, quantidade } = req.body;
 
       // Verificar se a manutenção existe
       const manutencao = await Manutencao.findOne({
-        where: { id_sala, id_item },
+        where: { id },
       });
 
       if (!manutencao) {
@@ -110,11 +110,11 @@ class ManutencaoController {
   // Delete (exclusão de uma manutenção por ID)
   async deleteManutencao(req, res) {
     try {
-      const { id_sala, id_item } = req.params;
+      const { id } = req.params;
 
       // Verificar se a manutenção existe
       const manutencao = await Manutencao.findOne({
-        where: { id_sala, id_item },
+        where: { id },
       });
 
       if (!manutencao) {

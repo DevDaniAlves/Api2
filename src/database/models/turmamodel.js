@@ -11,6 +11,9 @@ module.exports = (sequelize) => {
     turno: DataTypes.INTEGER,
     nome_turma: DataTypes.STRING,
     
+  },
+  {
+    timestamp: true
   });
 
   Turma.associate = (models) => {

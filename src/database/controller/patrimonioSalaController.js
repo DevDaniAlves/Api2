@@ -43,7 +43,7 @@ class PatrimonioSalaController {
 
       // Verificar se o patrimônio de sala com os mesmos IDs já existe
       const patrimonioSalaExistente = await PatrimonioSala.findOne({
-        where: { id_item, id_sala },
+        where: { id},
       });
 
       if (patrimonioSalaExistente) {
@@ -63,11 +63,11 @@ class PatrimonioSalaController {
   // Read (obtenção de informações de um patrimônio de sala por ID)
   async getPatrimonioSalaById(req, res) {
     try {
-      const { id_item, id_sala } = req.params;
+      const { id} = req.params;
 
       // Verificar se o patrimônio de sala existe
       const patrimonioSala = await PatrimonioSala.findOne({
-        where: { id_item, id_sala },
+        where: { id},
       });
 
       if (!patrimonioSala) {
@@ -84,12 +84,12 @@ class PatrimonioSalaController {
   // Update (atualização de informações de um patrimônio de sala por ID)
   async updatePatrimonioSala(req, res) {
     try {
-      const { id_item, id_sala } = req.params;
+      const { id} = req.params;
       const { quantidade } = req.body;
 
       // Verificar se o patrimônio de sala existe
       const patrimonioSala = await PatrimonioSala.findOne({
-        where: { id_item, id_sala },
+        where: { id},
       });
 
       if (!patrimonioSala) {
@@ -109,11 +109,11 @@ class PatrimonioSalaController {
   // Delete (exclusão de um patrimônio de sala por ID)
   async deletePatrimonioSala(req, res) {
     try {
-      const { id_item, id_sala } = req.params;
+      const { id } = req.params;
 
       // Verificar se o patrimônio de sala existe
       const patrimônioSala = await PatrimonioSala.findOne({
-        where: { id_item, id_sala },
+        where: { id },
       });
 
       if (!patrimônioSala) {

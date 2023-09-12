@@ -8,13 +8,13 @@ class SalaRecebeTurmaController {
   // Consulta com Inner Join entre SalaRecebeTurma e Turma
   async getSalaRecebeTurmaWithTurma(req, res) {
     try {
-      await SalaRecebeTurma.findAll();
+      const salaRecebeTurmaData = await SalaRecebeTurma.findAll();
 
     // Use um loop ou mapeamento para buscar dados associados
     const salaRecebeTurmaWithAssociations = await Promise.all(
       salaRecebeTurmaData.map(async (salaRecebeTurma) => {
-        const sala = await salaRecebeTurma.getSala();
-        const turma = await salaRecebeTurma.getTurma();
+        const sala = await Sala.findByPk(salaRecebeTurma.id_sala);
+        const turma = await Turma.findByPk(salaRecebeTurma.id_turma);
 
         // Combine os dados associados com o objeto SalaRecebeTurma
         return {
@@ -84,12 +84,12 @@ class SalaRecebeTurmaController {
   // Update (atualização de informações de uma relação entre sala e turma por ID)
   async updateSalaRecebeTurma(req, res) {
     try {
-      const { id_sala, id_turma } = req.params;
-      const { turno } = req.body;
+      const { id } = req.params;
+      const { id_sala, id_turma, turno } = req.body;
 
       // Verificar se a relação existe
       const relacao = await SalaRecebeTurma.findOne({
-        where: { id_sala, id_turma },
+        where: { id },
       });
 
       if (!relacao) {
@@ -97,7 +97,7 @@ class SalaRecebeTurmaController {
       }
 
       // Atualizar os dados da relação
-      await relacao.update({ turno });
+      await relacao.update({ id_sala, id_turma, turno });
 
       return res.status(200).json({ message: 'Relação atualizada com sucesso.' });
     } catch (error) {
