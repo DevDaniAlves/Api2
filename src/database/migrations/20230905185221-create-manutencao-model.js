@@ -10,15 +10,25 @@ module.exports = {
       },
       id_item: {
         type: Sequelize.INTEGER,
-        references: {model: "items", key:"id"},
+        references: {
+          model: "items",
+          key: "id",
+          onDelete: 'CASCADE', // Adicione esta linha para definir ON DELETE CASCADE
+          onUpdate: 'CASCADE', // Adicione esta linha para definir ON UPDATE CASCADE
+        },
         allowNull: false
       },
       id_sala: {
         type: Sequelize.INTEGER,
-        references: {model: "salas", key: 'id'},
+        references: {
+          model: "salas",
+          key: 'id',
+          onDelete: 'CASCADE', // Adicione esta linha para definir ON DELETE CASCADE
+          onUpdate: 'CASCADE', // Adicione esta linha para definir ON UPDATE CASCADE
+        },
         allowNull: false
       },
-      resolvido:  {
+      resolvido: {
         type: Sequelize.BOOLEAN,
         allowNull: false
       },
@@ -38,6 +48,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('manutencao');
+    await queryInterface.dropTable('manutencaos');
   },
 };

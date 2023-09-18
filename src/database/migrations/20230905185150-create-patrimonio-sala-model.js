@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('patrimonio_sala', {
+    await queryInterface.createTable('patrimonio_salas', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -10,15 +10,19 @@ module.exports = {
       },
       id_item: {
         type: Sequelize.INTEGER,
-        references: {model: "items", key:"id"},
-        allowNull: false
+        references: { model: "items", key: "id" },
+        allowNull: false,
+        onDelete: 'CASCADE', // Adicione esta linha para definir ON DELETE CASCADE
+        onUpdate: 'CASCADE', // Adicione esta linha para definir ON UPDATE CASCADE
       },
       id_sala: {
         type: Sequelize.INTEGER,
-        references: {model: "salas", key: 'id'},
-        allowNull: false
+        references: { model: "salas", key: 'id' },
+        allowNull: false,
+        onDelete: 'CASCADE', // Adicione esta linha para definir ON DELETE CASCADE
+        onUpdate: 'CASCADE', // Adicione esta linha para definir ON UPDATE CASCADE
       },
-      quantidade:  {
+      quantidade: {
         type: Sequelize.INTEGER,
         allowNull: false
       },

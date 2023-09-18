@@ -33,18 +33,23 @@ routes.get('/patrimonio_sala/getAll', authMiddleware, patrimonioSalaController.g
 routes.get('/patrimonio_sala/getbyId/:id', authMiddleware, patrimonioSalaController.getPatrimonioSalaById)
 routes.put('/patrimonio_sala/update/:id', authMiddleware, patrimonioSalaController.updatePatrimonioSala)
 routes.delete('/patrimonio_sala/delete/:id', authMiddleware, patrimonioSalaController.deletePatrimonioSala)
+routes.get('/patrimonio_total', authMiddleware, patrimonioSalaController.getSumQuantitiesByItemId)
+routes.get('/patrimonio_sala/:id', authMiddleware, patrimonioSalaController.getItemsFromSala)
 
 routes.post('/sala_recebe_turma/create', authMiddleware, salaRecebeTurmaController.createSalaRecebeTurma)
 routes.get('/sala_recebe_turma/getAll', authMiddleware, salaRecebeTurmaController.getSalaRecebeTurmaWithTurma)
 routes.get('/sala_recebe_turma/getbyId/:id', authMiddleware, salaRecebeTurmaController.getSalaRecebeTurmaById)
 routes.put('/sala_recebe_turma/update/:id', authMiddleware, salaRecebeTurmaController.updateSalaRecebeTurma)
 routes.delete('/sala_recebe_turma/delete/:id', authMiddleware, salaRecebeTurmaController.deleteSalaRecebeTurma)
+routes.get('/sala_recebe_turma/:id_sala', authMiddleware, salaRecebeTurmaController.getTurmasBySalaId)
+
 
 routes.post('/manutencao/create', authMiddleware, manutencaoControleer.createManutencao)
 routes.get('/manutencao/getAll', authMiddleware, manutencaoControleer.getManutencaoWithSalaAndItem)
 routes.get('/manutencao/getbyId/:id', authMiddleware,manutencaoControleer.getManutencaoById)
 routes.put('/manutencao/update/:id', authMiddleware, manutencaoControleer.updateManutencao)
 routes.delete('/manutencao/delete/:id', authMiddleware,manutencaoControleer.deleteManutencao)
+routes.get('/manutencao_sala/:id', authMiddleware, manutencaoControleer.getManutencoesWithSala)
 
 routes.post('/user/signup', signupUserController.signup);
 routes.post('/user/sigin', siginUserController.sigin);

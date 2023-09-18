@@ -6,7 +6,7 @@ class salaController {
    async createSala (req, res) {
     try {
       const {
-        id,
+  
         capacidade,
         localizacao,
         responsavel,
@@ -15,7 +15,7 @@ class salaController {
         not_disp,
         tamanho,
       } = req.body;
-      console.log(id,
+      console.log(
         capacidade,
         localizacao,
         responsavel,
@@ -24,19 +24,13 @@ class salaController {
         not_disp,
         tamanho, )
       // Validar os dados antes de criar a sala
-      if (!id || !capacidade || !localizacao || !responsavel || !tamanho) {
+      if ( !capacidade || !localizacao || !responsavel || !tamanho) {
         return res.status(400).json({ error: 'Campos obrigatórios não fornecidos.' });
       }
 
       // Verificar se a sala com o mesmo ID já existe
-      const salaExistente = await Sala.findOne({ where: { id } });
-      if (salaExistente) {
-        return res.status(400).json({ error: 'Uma sala com este ID já existe.' });
-      }
-
       // Criar a sala
       const novaSala = await Sala.create({
-        id,
         capacidade,
         localizacao,
         responsavel,

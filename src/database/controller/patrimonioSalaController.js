@@ -6,6 +6,78 @@ const Item = require('../models/itemmodel')(sequelize);
 
 class PatrimonioSalaController {
   // Consulta com Inner Join entre PatrimonioSala, Sala e Item
+
+  async getItemsFromSala(req, res) {
+    const { id } = req.params; // Obtenha o ID da sala da URL
+  
+    try {
+      // Encontre todos os patrimônios associados às salas
+      const patrimonioSalaData = await PatrimonioSala.findAll({
+        where: {
+          id_sala: id, // Filtre pelo ID da sala específica
+        },
+      });
+  
+      // Use um loop ou mapeamento para buscar dados associados
+      const patrimonioSalaWithAssociations = await Promise.all(
+        patrimonioSalaData.map(async (patrimonioSala) => {
+          const item = await Item.findByPk(patrimonioSala.id_item);
+          const sala = await Sala.findByPk(patrimonioSala.id_sala);
+  
+          // Combine os dados associados com o objeto PatrimonioSala
+          return {
+            patrimonioSala: patrimonioSala,
+            item: item,
+            sala: sala,
+          };
+        })
+      );
+  
+      return res.status(200).json(patrimonioSalaWithAssociations);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Ocorreu um erro ao obter informações do patrimônio da sala.' });
+    }
+  }
+  async getSumQuantitiesByItemId(req, res) {
+    try {
+      const patrimonioSalaData = await PatrimonioSala.findAll();
+
+      // Objeto para armazenar o resultado do agrupamento e soma
+      const result = {};
+
+      // Loop pelos registros de PatrimonioSala
+      for (const patrimonioSala of patrimonioSalaData) {
+        const { id_item, quantidade } = patrimonioSala;
+
+        // Verifica se já existe uma entrada para o id_item
+        if (!result[id_item]) {
+          result[id_item] = {
+            id_item: id_item,
+            total_quantidade: 0, // Inicializa a quantidade com 0
+          };
+        }
+
+        // Adiciona a quantidade ao total existente
+        result[id_item].total_quantidade += quantidade;
+      }
+
+      // Converte o objeto em um array
+      const resultArray = Object.values(result);
+
+      // Consulta os nomes dos itens
+      for (const entry of resultArray) {
+        const item = await Item.findByPk(entry.id_item);
+        entry.nome_item = item ? item.nome_item : null;
+      }
+
+      return res.status(200).json(resultArray);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Ocorreu um erro ao obter informações.' });
+    }
+  }
+  
   async getPatrimonioSalaWithSalaAndItem(req, res) {
     try {
       const patrimonioSalaData = await PatrimonioSala.findAll();
@@ -43,7 +115,7 @@ class PatrimonioSalaController {
 
       // Verificar se o patrimônio de sala com os mesmos IDs já existe
       const patrimonioSalaExistente = await PatrimonioSala.findOne({
-        where: { id},
+        where: { id_item, id_sala},
       });
 
       if (patrimonioSalaExistente) {

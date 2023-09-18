@@ -44,7 +44,7 @@ class SiginUserController {
             const accessToken = jwt.sign(
                 { id: userExists.id },
                 TOKEN_SECRET,
-                { expiresIn: '30m' }
+                { expiresIn: '3h' }
             );
 
             return response.status(200).json({

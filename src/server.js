@@ -1,9 +1,13 @@
 const express = require('express');
-const app = express();
+const app = express()
+const cors = require('cors') 
 
 const { routes } = require('./routes');
-const {SECRET_KEY} = require('./enviroments')
+
+
 // Adicione suas rotas ao aplicativo
+app.use(cors())
+
 app.use(express.json());
 app.use('/', routes);
 
