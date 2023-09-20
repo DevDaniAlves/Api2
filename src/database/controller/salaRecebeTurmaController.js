@@ -131,11 +131,11 @@ class SalaRecebeTurmaController {
   // Read (obtenção de informações de uma relação entre sala e turma por ID)
   async getSalaRecebeTurmaById(req, res) {
     try {
-      const { id_sala, id_turma } = req.params;
+      const { id } = req.params;
 
       // Verificar se a relação existe
       const relacao = await SalaRecebeTurma.findOne({
-        where: { id_sala, id_turma },
+        where: { id },
       });
 
       if (!relacao) {
