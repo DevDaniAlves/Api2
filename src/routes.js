@@ -43,7 +43,7 @@ routes.put('/sala_recebe_turma/update/:id', authMiddleware, salaRecebeTurmaContr
 routes.delete('/sala_recebe_turma/delete/:id', authMiddleware, salaRecebeTurmaController.deleteSalaRecebeTurma)
 routes.get('/sala_recebe_turma/:id_sala', authMiddleware, salaRecebeTurmaController.getTurmasBySalaId)
 
-
+routes.get('/manutencao/sala/:idSala', authMiddleware, manutencaoControleer.getManutencoesBySalaId);
 routes.post('/manutencao/create', authMiddleware, manutencaoControleer.createManutencao)
 routes.get('/manutencao/getAll', authMiddleware, manutencaoControleer.getManutencaoWithSalaAndItem)
 routes.get('/manutencao/getbyId/:id', authMiddleware,manutencaoControleer.getManutencaoById)

@@ -94,24 +94,24 @@ class SalaRecebeTurmaController {
       switch (turno) {
         case 1:
           if (!sala.mat_disp) {
-            return res.status(400).json({ error: 'Sala já ocupada no turno da manhã.' });
+            return res.status(405).json({ error: 'Sala já ocupada no turno da manhã.' });
           }
           sala.mat_disp = false;
           break;
         case 2:
           if (!sala.vesp_disp) {
-            return res.status(400).json({ error: 'Sala já ocupada no turno da tarde.' });
+            return res.status(405).json({ error: 'Sala já ocupada no turno da tarde.' });
           }
           sala.vesp_disp = false;
           break;
         case 3:
           if (!sala.not_disp) {
-            return res.status(400).json({ error: 'Sala já ocupada no turno da noite.' });
+            return res.status(405).json({ error: 'Sala já ocupada no turno da noite.' });
           }
           sala.not_disp = false;
           break;
         default:
-          return res.status(400).json({ error: 'Valor inválido para o campo "turno".' });
+          return res.status(405).json({ error: 'Valor inválido para o campo "turno".' });
       }
 
       // Criar a relação
