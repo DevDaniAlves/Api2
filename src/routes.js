@@ -10,6 +10,7 @@ const siginUserController = require ('./database/controller/sigin-user-controlle
 const signupUserController = require ('./database/controller/signup-user-controller')
 const routes = Router();
 
+routes.get('/teste', salaController.getAll)
 routes.post('/sala/create', authMiddleware,  salaController.createSala)
 routes.get('/sala/getAll', authMiddleware, salaController.getAll)
 routes.get('/sala/getbyId/:id', authMiddleware, salaController.getSalaById)
