@@ -1,5 +1,5 @@
-import fs from "fs";
-import https from 'https'
+const fs = require("fs");
+const https = require ('https')
 const express = require('express');
 const app = express()
 const cors = require('cors') 
