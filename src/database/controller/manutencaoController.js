@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 const sequelize = require('../sequelize')
-const Manutencao = require('../models/manutençãomodel')(sequelize);
+const Manutencao = require('../models/manutencaomodel')(sequelize);
 const Sala = require('../models/salamodel')(sequelize);
 const Item = require('../models/itemmodel')(sequelize);
 const PatrimonioSala = require('../models/patrimoniosalamodel')(sequelize)
