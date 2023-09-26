@@ -1,3 +1,5 @@
+import fs from "fs";
+import https from 'https'
 const express = require('express');
 const app = express()
 const cors = require('cors') 
@@ -18,3 +20,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+https.createServer({
+  cert: fs.readFileSync("src/ssl/code.crt"),
+  key: fs.readFileSync("src/ssl/code.key")
+}, app).listen(443, ()=> console.log("Rodando em https"))
